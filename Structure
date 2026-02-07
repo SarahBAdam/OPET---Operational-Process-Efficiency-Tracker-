@@ -1,0 +1,17 @@
+OPET/
+│
+├── app.py
+├── requirements.txt
+├── README.md
+├── database/
+│   └── op_tracker.db
+├── templates/
+│   ├── layout.html
+│   ├── login.html
+│   ├── dashboard.html
+│   └── tasks.html
+└── static/
+    ├── css/
+    │   └── style.css
+    └── js/
+        └── chart.js
