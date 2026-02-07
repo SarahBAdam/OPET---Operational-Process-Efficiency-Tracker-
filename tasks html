@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2>Tasks</h2>
+<form method="POST" class="mb-3">
+    <div class="row">
+        <div class="col-md-5"><input type="text" name="name" class="form-control" placeholder="Task Name" required></div>
+        <div class="col-md-5"><input type="text" name="resource" class="form-control" placeholder="Assigned Resource" required></div>
+        <div class="col-md-2"><button class="btn btn-primary w-100">Add Task</button></div>
+    </div>
+</form>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Resource</th>
+            <th>Status</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.name }}</td>
+            <td>{{ task.resource }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>{% if task.end_time %}{{ task.end_time.strftime('%Y-%m-%d %H:%M:%S') }}{% endif %}</td>
+            <td>
+                {% if task.status != 'Completed' %}
+                <a href="{{ url_for('complete_task', id=task.id) }}" class="btn btn-success btn-sm">Complete</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
