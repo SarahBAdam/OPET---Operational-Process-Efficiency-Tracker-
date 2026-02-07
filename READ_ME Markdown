@@ -1,0 +1,26 @@
+# Operational Process Efficiency Tracker (OPET)
+
+## Business Description
+OPET is a web application for tracking operational process efficiency. It monitors task processing times, identifies bottlenecks, and analyzes resource utilization.
+
+## Demo Login
+- Username: admin
+- Password: admin123
+
+## Features
+- Task management
+- Dashboard with total tasks, completed tasks, average processing time
+- Complete tasks and track duration
+- Resource utilization monitoring
+- Simple analytics (extendable with charts)
+
+## Tech Stack
+- Python 3.x + Flask
+- SQLite Database
+- Bootstrap 5
+
+## Deployment Instructions
+1. Clone repository:
+```bash
+git clone <repo_url>
+cd OPET
