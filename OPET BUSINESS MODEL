@@ -1,0 +1,53 @@
+Business Description
+
+Project Name: Operational Process Efficiency Tracker (OPET)
+
+Description:
+OPET is a web-based application designed to help organizations monitor and improve operational processes. It provides real-time tracking of processing times, identifies bottlenecks, and monitors resource utilization, enabling business analysts and operations managers to make data-driven decisions and optimize workflows.
+
+Use Case:
+
+Track task processing times across departments.
+
+Identify operational bottlenecks causing delays.
+
+Analyze staff or resource utilization for efficiency improvements.
+
+Generate reports and dashboards for management review.
+
+Business Case:
+Companies spend significant time and resources on inefficient processes. By using OPET, organizations can:
+
+Reduce process delays and costs.
+
+Allocate resources more effectively.
+
+Increase productivity and throughput.
+
+Make informed decisions using actionable analytics.
+
+2️⃣ Features
+
+User authentication: Secure login for admins and team leads.
+
+Task tracking: Add tasks, assign resources, track start/end times.
+
+Bottleneck analysis: Visualize tasks with delays and high processing times.
+
+Resource utilization: Track resource workload and idle times.
+
+Dashboard: Charts showing average processing time, bottlenecks, and resource efficiency.
+
+Exportable reports: CSV/Excel download of tracked data.
+
+3️⃣ Tech Stack
+
+Backend: Python + Flask
+
+Database: SQLite (can be replaced by MySQL/PostgreSQL for production)
+
+Frontend: HTML + Bootstrap + Chart.js
+
+Hosting/Deployment: Any cloud provider supporting Python/Flask (Heroku, Render, PythonAnywhere)
+
+Version Control: GitHub
