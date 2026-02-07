@@ -1,0 +1,6 @@
+Database
+
+SQLite database: database/op_tracker.db
+
+Pre-populated with demo admin user.
+
