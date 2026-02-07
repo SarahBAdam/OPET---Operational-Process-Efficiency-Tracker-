@@ -1,0 +1,93 @@
+# app.py
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/op_tracker.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+# --------------------
+# Database Models
+# --------------------
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
+
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    resource = db.Column(db.String(50), nullable=False)
+    start_time = db.Column(db.DateTime, default=datetime.utcnow)
+    end_time = db.Column(db.DateTime, nullable=True)
+    status = db.Column(db.String(20), default="In Progress")
+
+# --------------------
+# Routes
+# --------------------
+@app.route('/')
+def index():
+    if 'user' in session:
+        return redirect(url_for('dashboard'))
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username, password=password).first()
+        if user:
+            session['user'] = user.username
+            return redirect(url_for('dashboard'))
+        else:
+            flash("Invalid credentials!", "danger")
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('login'))
+
+@app.route('/dashboard')
+def dashboard():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    tasks = Task.query.all()
+    total_tasks = len(tasks)
+    completed_tasks = len([t for t in tasks if t.status == 'Completed'])
+    avg_time = sum([(t.end_time - t.start_time).total_seconds() for t in tasks if t.end_time], 0)/max(1, completed_tasks)
+    return render_template('dashboard.html', tasks=tasks, total_tasks=total_tasks, completed_tasks=completed_tasks, avg_time=avg_time)
+
+@app.route('/tasks', methods=['GET', 'POST'])
+def tasks():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        name = request.form['name']
+        resource = request.form['resource']
+        task = Task(name=name, resource=resource)
+        db.session.add(task)
+        db.session.commit()
+        flash("Task added!", "success")
+    tasks = Task.query.all()
+    return render_template('tasks.html', tasks=tasks)
+
+@app.route('/complete/<int:id>')
+def complete_task(id):
+    task = Task.query.get_or_404(id)
+    task.end_time = datetime.utcnow()
+    task.status = 'Completed'
+    db.session.commit()
+    flash("Task completed!", "success")
+    return redirect(url_for('tasks'))
+
+# --------------------
+# Run App
+# --------------------
+if __name__ == '__main__':
+    db.create_all()
+    app.run(debug=True)
