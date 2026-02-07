@@ -1,0 +1,17 @@
+OPET/
+│
+├── app.py                  # Main Flask app
+├── requirements.txt        # Python dependencies
+├── README.md               # Business description, instructions
+├── templates/              # HTML templates
+│   ├── dashboard.html
+│   ├── login.html
+│   ├── tasks.html
+│   └── layout.html
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── chart.js
+└── database/
+    └── op_tracker.db       # SQLite database
